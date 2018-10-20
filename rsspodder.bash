@@ -15,7 +15,7 @@
 datadir=$(pwd)
 metadir=$datadir/.rsspodder
 siteslog=$metadir/sites.log
-program="RSSPodder v 0.1.0 (https://github.com/tjadowski/rsspodder.git)"
+program="RSSPodder (https://github.com/tjadowski/rsspodder.git)"
 
 function verify_environment {
     if ! command -v xsltproc &>/dev/null; then
@@ -79,7 +79,19 @@ function downloader {
     output=$2
     cert=$3
 
-    wget $cert -q -T 10 -c -t 10 -U "$program" -O $output $url
+    gzipped=`curl -H "Accept-Encoding: gzip" --silent --head --url $url -A "$program" | grep "Content-Encoding: gzip" | wc -c`
+    if [ $gzipped == '24' ]; then
+      echo "Site is gzipped: $url"
+      curl -C - -L --compressed --silent --url $url --connect-timeout 15 --retry 10 --retry-delay 2 -A "$program" -o temp.gz
+      gunzip -qt temp.gz >> /dev/null 2>&1
+      is_gzipped=`echo $?`
+      if [ $is_gzipped == '0' ]; then
+        gunzip temp.gz
+        mv temp $output
+      fi
+    else
+      curl -C - -L --silent --url $url --connect-timeout 15 --retry 10 --retry-delay 2 -A "$program" -o $output
+    fi
 }
 
 function get_urls {
@@ -161,8 +173,7 @@ function sync {
             sitedir=$metadir/$(get_sitedir $url)
             feed=$sitedir/feed
             if [ -f $feed ]; then
-                    echo "$(date +%s) Start syncing feed from $url"
-                rm $feed
+                echo "$(date +%s) Start syncing feed from $url"
                 downloader $url $feed $cert
             else
                 echo $url >> $log

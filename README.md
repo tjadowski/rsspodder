@@ -31,13 +31,14 @@ TODO:
 
 BUGS:
 
-[ ] - RSSPodd#07: some sites are saved in gziped form
+[x] - RSSPodd#07: some sites are saved in gziped form
 [ ] - RSSPodd#08: software doesn't detect other MIME from text/html
 [ ] - RSSPodd#09: unnecessary retry of 403 HTTP status
 
 CHANGELOG:
 
-- 03/31/2018 - Import old repo, changed links and contact details
+- 03/31/2018 - Imported old repo, changed links and contact details
+- 20/10/2018 - Fixed RSSPodd#07
  
 LICENSE:
 
