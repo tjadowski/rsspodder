@@ -22,18 +22,18 @@ ISSUES:
 
 TODO:
 
-[ ] - RSSPodd#01: export OPML file
-[ ] - RSSPodd#02: add parallel support for sync and download options
-[ ] - RSSPodd#03: add debug and override wget parameters options
-[ ] - RSSPodd#04: more detailed and strict verbose parameters
-[ ] - RSSPodd#05: save sites with all assets, not only html text
-[ ] - RSSPodd#06: port to NetBSD
+1. [ ] - RSSPodd#01: export OPML file
+2. [ ] - RSSPodd#02: add parallel support for sync and download options
+3. [ ] - RSSPodd#03: add debug and override wget parameters options
+4. [ ] - RSSPodd#04: more detailed and strict verbose parameters
+5. [ ] - RSSPodd#05: save sites with all assets, not only html text
+6. [ ] - RSSPodd#06: port to NetBSD
 
 BUGS:
 
-[x] - RSSPodd#07: some sites are saved in gziped form
-[ ] - RSSPodd#08: software doesn't detect other MIME from text/html
-[ ] - RSSPodd#09: unnecessary retry of 403 HTTP status
+1. [x] - RSSPodd#07: some sites are saved in gziped form
+2. [ ] - RSSPodd#08: software doesn't detect other MIME from text/html
+3. [ ] - RSSPodd#09: unnecessary retry of 403 HTTP status
 
 CHANGELOG:
 
