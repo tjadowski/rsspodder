@@ -82,15 +82,11 @@ function downloader {
     gzipped=`curl -H "Accept-Encoding: gzip" --silent --head --url $url -A "$program" | grep "Content-Encoding: gzip" | wc -c`
     if [ $gzipped == '24' ]; then
       echo "Site is gzipped: $url"
-      curl -C - -L --compressed --silent --url $url --connect-timeout 15 --retry 10 --retry-delay 2 -A "$program" -o temp.gz
-      gunzip -qt temp.gz >> /dev/null 2>&1
-      is_gzipped=`echo $?`
-      if [ $is_gzipped == '0' ]; then
-        gunzip temp.gz
-        mv temp $output
-      fi
+      curl -L -H "Accept-Encoding: gzip" --silent --url $url --connect-timeout 15 --retry 10 --retry-delay 2 -A "$program" -o temp.gz
+      gunzip temp.gz
+      mv temp $output
     else
-      curl -C - -L --silent --url $url --connect-timeout 15 --retry 10 --retry-delay 2 -A "$program" -o $output
+      curl -L --silent --url $url --connect-timeout 15 --retry 10 --retry-delay 2 -A "$program" -o $output
     fi
 }
 
