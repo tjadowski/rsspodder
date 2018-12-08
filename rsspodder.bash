@@ -17,6 +17,15 @@ metadir=$datadir/.rsspodder
 siteslog=$metadir/sites.log
 program="RSSPodder (https://github.com/tjadowski/rsspodder.git)"
 
+if command -v md5sum &>/dev/null; then
+    md5program=md5sum
+elif command -v md5 &>/dev/null;then
+    md5program=md5
+else
+    echo "I can't detect a program for MD5 hash calculation!"
+    exit 1
+fi
+
 function verify_environment {
     if ! command -v xsltproc &>/dev/null; then
         echo "Please install xsltproc package"
@@ -219,7 +228,7 @@ function download {
                 atom=$(xsltproc parse_atom.xsl $feed 2> /dev/null)
                 for url in $rss$atom
                     do
-                        filename=$(echo "$url" | md5sum | awk {'print $1'})
+                        filename=$(echo "$url" | $md5program | awk {'print $1'})
                         if ! grep "$filename" $siteslog > /dev/null ; then
                             #Fix blog.golang.org rss
                             if [[ $url =~ ^// ]]; then
